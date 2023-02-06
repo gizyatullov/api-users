@@ -1,48 +1,74 @@
-from fastapi import APIRouter, Security, status
-from fastapi_jwt import JwtAuthorizationCredentials
+from datetime import timedelta
+
+from fastapi import APIRouter, status, Depends
+from fastapi_jwt_auth import AuthJWT
 
 from fastapi_template import shemas
-from fastapi_template.pkg.pkg import jwt
-from fastapi_template.services import auth_service, user_service
+from fastapi_template.settings import settings
+from fastapi_template.services import auth_service
 
 router = APIRouter()
 
 __all__ = [
-    "router",
+    'router',
 ]
+
+access_token_expires = timedelta(minutes=20)
+refresh_token_expires = timedelta(days=30)
+
+
+@AuthJWT.load_config
+def get_config():
+    return settings
 
 
 @router.post(
-    "/login",
+    '/login',
     response_model=shemas.Auth,
     status_code=status.HTTP_200_OK,
-    description="Route for authorize.",
+    description='Route for authorize.',
 )
 async def auth_user(
     cmd: shemas.AuthCommand,
+    Authorize: AuthJWT = Depends()
 ):
     user = await auth_service.check_user_password(cmd=cmd)
-    return jwt.jwt_service.get_token_pair(user=user)
+
+    access_token = Authorize.create_access_token(subject=user.username,
+                                                 expires_time=access_token_expires)
+    refresh_token = Authorize.create_refresh_token(subject=user.username,
+                                                   expires_time=refresh_token_expires)
+    return shemas.Auth(
+        access_token=access_token,
+        refresh_token=refresh_token
+    )
 
 
 @router.post(
-    "/refresh",
+    '/refresh',
     response_model=shemas.Auth,
-    description="Get new tokens pair.",
+    description='Get new tokens pair.',
 )
 async def create_new_token_pair(
-    credentials: JwtAuthorizationCredentials = Security(jwt.refresh_security),
+    Authorize: AuthJWT = Depends(),
 ):
-    user = await user_service.read_specific_user_by_username(
-        query=shemas.ReadUserByUserNameQuery(username=credentials.jti),
+    Authorize.jwt_refresh_token_required()
+    current_user = Authorize.get_jwt_subject()
+    access_token = Authorize.create_access_token(subject=current_user,
+                                                 expires_time=access_token_expires)
+    refresh_token = Authorize.create_refresh_token(subject=current_user,
+                                                   expires_time=refresh_token_expires)
+    return shemas.Auth(
+        access_token=access_token,
+        refresh_token=refresh_token
     )
-    return jwt.jwt_service.get_token_pair(user=user)
 
 
 @router.get(
-    "/me",
+    '/me',
 )
 async def get_me(
-    credentials: JwtAuthorizationCredentials = Security(jwt.access_security),
+    Authorize: AuthJWT = Depends(),
 ):
-    return credentials
+    Authorize.jwt_required()
+    return Authorize.get_raw_jwt()

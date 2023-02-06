@@ -1,7 +1,7 @@
-from dependency_injector import containers, providers
-
 from .user import UserRepository
 
+__all__ = [
+    'user_repository',
+]
 
-class Repositories(containers.DeclarativeContainer):
-    user_repository = providers.Factory(UserRepository)
+user_repository = UserRepository()

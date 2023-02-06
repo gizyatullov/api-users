@@ -70,7 +70,7 @@ class Settings(_Settings):
     db_echo: bool = False
 
     #: SecretStr: Key for encrypt payload in jwt.
-    JWT_SECRET_KEY: SecretStr
+    AUTHJWT_SECRET_KEY: str
 
     @property
     def db_url(self) -> URL:

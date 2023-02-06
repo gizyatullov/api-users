@@ -332,6 +332,24 @@ docs = ["MkAutoDoc (>=0.1.0,<1.0.0)", "lazydocs (>=0.4.5,<1.0.0)", "mike (>=1.1.
 test = ["black (==21.11b1)", "flake8 (>=4.0.0,<8.0.0)", "isort (>=5.10.1,<6.0.0)", "mypy (>=0.910)", "pytest (>=6.0.0,<7.0.0)", "pytest-cov (>=3.0.0,<4.0.0)", "pytest-mock (>=3.0.0,<4.0.0)", "requests (>=2.25.0,<3.0.0)"]
 
 [[package]]
+name = "fastapi-jwt-auth"
+version = "0.5.0"
+description = "FastAPI extension that provides JWT Auth support (secure, easy to use and lightweight)"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+fastapi = ">=0.61.0"
+PyJWT = ">=1.7.1,<2.0.0"
+
+[package.extras]
+asymmetric = ["cryptography (>=2.6,<4.0.0)"]
+dev = ["cryptography (>=2.6,<4.0.0)", "uvicorn (>=0.11.5,<0.12.0)"]
+doc = ["markdown-include (>=0.5.1,<0.6.0)", "mkdocs (>=1.1.2,<2.0.0)", "mkdocs-material (>=5.5.0,<6.0.0)"]
+test = ["coveralls (==2.1.2)", "pytest (==6.0.1)", "pytest-cov (==2.10.0)"]
+
+[[package]]
 name = "filelock"
 version = "3.9.0"
 description = "A platform independent file lock."
@@ -868,6 +886,19 @@ python-versions = ">=3.6"
 plugins = ["importlib-metadata"]
 
 [[package]]
+name = "pyjwt"
+version = "1.7.1"
+description = "JSON Web Token implementation in Python"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.extras]
+crypto = ["cryptography (>=1.4)"]
+flake8 = ["flake8", "flake8-import-order", "pep8-naming"]
+test = ["pytest (>=4.0.1,<5.0.0)", "pytest-cov (>=2.6.0,<3.0.0)", "pytest-runner (>=4.2,<5.0.0)"]
+
+[[package]]
 name = "pypika-tortoise"
 version = "0.1.6"
 description = "Forked from pypika and streamline just for tortoise-orm"
@@ -1246,7 +1277,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "2e3923c13aa41b2b3d6e8498c4105f7b90a7057a0fd4d9cebc197b8a257387be"
+content-hash = "d0f8dcae4213ac1ae70b68b734e30e0908445c97e98d2e9d73a107a6a927a267"
 
 [metadata.files]
 aiofiles = [
@@ -1609,6 +1640,10 @@ fastapi = [
 fastapi-jwt = [
     {file = "fastapi_jwt-0.1.8-py3-none-any.whl", hash = "sha256:3e0a6686c8d6de1d7999355ba440d49763906ae764bcd4d8988828351d4d0377"},
 ]
+fastapi-jwt-auth = [
+    {file = "fastapi-jwt-auth-0.5.0.tar.gz", hash = "sha256:d98068a9e828fe5909a1f338efabc3bb53149f11a9d2d395ab9d90fbb486b375"},
+    {file = "fastapi_jwt_auth-0.5.0-py3-none-any.whl", hash = "sha256:43110a227e36f93b99257a1c79e66df8ed3d4c893291db8f9db2686192011f17"},
+]
 filelock = [
     {file = "filelock-3.9.0-py3-none-any.whl", hash = "sha256:f58d535af89bb9ad5cd4df046f741f8553a418c01a7856bf0d173bbc9f6bd16d"},
     {file = "filelock-3.9.0.tar.gz", hash = "sha256:7b319f24340b51f55a2bf7a12ac0755a9b03e718311dac567a0f4f7fabd2f5de"},
@@ -1962,6 +1997,10 @@ pyflakes = [
 pygments = [
     {file = "Pygments-2.14.0-py3-none-any.whl", hash = "sha256:fa7bd7bd2771287c0de303af8bfdfc731f51bd2c6a47ab69d117138893b82717"},
     {file = "Pygments-2.14.0.tar.gz", hash = "sha256:b3ed06a9e8ac9a9aae5a6f5dbe78a8a58655d17b43b93c078f094ddc476ae297"},
+]
+pyjwt = [
+    {file = "PyJWT-1.7.1-py2.py3-none-any.whl", hash = "sha256:5c6eca3c2940464d106b99ba83b00c6add741c9becaec087fb7ccdefea71350e"},
+    {file = "PyJWT-1.7.1.tar.gz", hash = "sha256:8d59a976fb773f3e6a39c85636357c4f0e242707394cadadd9814f5cbaa20e96"},
 ]
 pypika-tortoise = [
     {file = "pypika-tortoise-0.1.6.tar.gz", hash = "sha256:d802868f479a708e3263724c7b5719a26ad79399b2a70cea065f4a4cadbebf36"},

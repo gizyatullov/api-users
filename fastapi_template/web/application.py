@@ -4,13 +4,14 @@ from fastapi import FastAPI
 from fastapi.responses import UJSONResponse
 from fastapi.staticfiles import StaticFiles
 from tortoise.contrib.fastapi import register_tortoise
+from fastapi_jwt_auth.exceptions import AuthJWTException
 
-from fastapi_template import __containers__
 from fastapi_template.db.config import TORTOISE_CONFIG
 from fastapi_template.logging import configure_logging
 from fastapi_template.pkg.models.base import BaseAPIException
 from fastapi_template.pkg.pkg.middlewares.handle_http_exceptions import (
     handle_api_exceptions,
+    authjwt_exception_handler
 )
 from fastapi_template.settings import settings
 from fastapi_template.web.api.router import api_router
@@ -38,7 +39,6 @@ def get_app() -> FastAPI:
         openapi_url="/api/openapi.json",
         default_response_class=UJSONResponse,
     )
-    __containers__.wire_packages(app=app)
 
     # Adds startup and shutdown events.
     register_startup_event(app)
@@ -63,5 +63,6 @@ def get_app() -> FastAPI:
     )
 
     app.add_exception_handler(BaseAPIException, handle_api_exceptions)
+    app.add_exception_handler(AuthJWTException, authjwt_exception_handler)
 
     return app

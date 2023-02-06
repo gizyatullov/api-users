@@ -1,7 +1,7 @@
 from pydantic import Field
 
 from fastapi_template.pkg.models.base import BaseModel
-from fastapi_template.pkg.models.types import EncryptedSecretBytes, NotEmptySecretStr
+from fastapi_template.pkg.models.types import NotEmptySecretStr
 from fastapi_template.shemas import UserFields
 
 __all__ = ["Auth", "AuthCommand", "LogoutCommand"]
@@ -30,7 +30,7 @@ class Auth(BaseAuth):
 
 class AuthCommand(BaseAuth):
     username: str = AuthFields.username
-    password: EncryptedSecretBytes = AuthFields.password
+    password: str = AuthFields.password
 
 
 class LogoutCommand(BaseAuth):

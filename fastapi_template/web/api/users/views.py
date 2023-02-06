@@ -63,11 +63,11 @@ async def read_user(
 
 
 @router.patch(
-    "/password",
+    '/password',
     response_model=shemas.User,
     status_code=status.HTTP_202_ACCEPTED,
-    description="Change password.",
-    response_model_exclude={"password"},
+    description='Change password.',
+    response_model_exclude={'password'},
 )
 async def change_password(
     cmd: shemas.ChangeUserPasswordCommand,
@@ -87,4 +87,19 @@ async def delete_user(
 ):
     return await user_service.delete_specific_user(
         cmd=shemas.DeleteUserCommand(id=user_id),
+    )
+
+
+@router.patch(
+    '/user',
+    response_model=shemas.User,
+    status_code=status.HTTP_200_OK,
+    response_model_exclude={'password'},
+    description='Update specific user without password field.',
+)
+async def update_user(
+    cmd: shemas.UpdateUserCommand,
+):
+    return await user_service.update_specific_user_by_username(
+        cmd=cmd,
     )

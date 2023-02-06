@@ -24,10 +24,13 @@ Examples:
 from starlette import status
 from starlette.requests import Request
 from starlette.responses import JSONResponse
+from fastapi_jwt_auth.exceptions import AuthJWTException
 
 from fastapi_template.pkg.models.base import BaseAPIException
 
-__all__ = ["handle_internal_exception", "handle_api_exceptions"]
+__all__ = ["handle_internal_exception",
+           "handle_api_exceptions",
+           "authjwt_exception_handler", ]
 
 
 def handle_api_exceptions(request: Request, exc: BaseAPIException):
@@ -45,4 +48,11 @@ def handle_internal_exception(request: Request, exc: Exception):
     return JSONResponse(
         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
         content={"message": repr(exc)},
+    )
+
+
+def authjwt_exception_handler(request: Request, exc: AuthJWTException):
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={"detail": exc.message}
     )

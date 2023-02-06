@@ -2,10 +2,9 @@ from datetime import datetime
 from enum import Enum
 from typing import Optional
 
-from pydantic import Field, PositiveInt
+from pydantic import Field, PositiveInt, FileUrl
 
 from fastapi_template.pkg.models.base import BaseModel
-from fastapi_template.pkg.models.types import EncryptedSecretBytes
 
 __all__ = [
     "User",
@@ -21,34 +20,78 @@ __all__ = [
 
 
 class UserRole(Enum):
-    USER = "user"
-    ADMIN = "admin"
+    USER = 'user'
+    ADMIN = 'admin'
 
 
 class UserFields:
-    id = Field(description="User id.", example=2)
-    username = Field(description="User Login", example="TestTest")
+    id = Field(description='User id.', example=2)
+    username = Field(description='User Login', example='TestTest')
     password = Field(
-        description="User password",
-        example="strong password",
+        description='User password',
+        example='strong password',
         min_length=6,
         max_length=256,
     )
     old_password = Field(
-        description="Old user password.",
-        example="strong password",
+        description='Old user password.',
+        example='strong password',
         min_length=6,
         max_length=256,
     )
     new_password = Field(
-        description="New user password.",
-        example="strong password",
+        description='New user password.',
+        example='strong password',
         min_length=6,
         max_length=256,
     )
     role_name = Field(
-        description="User role.",
+        description='User role.',
         example=UserRole.USER.value,
+    )
+    is_seller = Field(
+        description='The seller ?',
+        example=False,
+        default=None,
+    )
+    btc_balance = Field(
+        description='Quantity btc.',
+        example=1051.0,
+        default=None,
+    )
+    btc_address = Field(
+        description='Address btc.',
+        example='3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy',
+        default=None,
+    )
+    otp = Field(
+        description='?.',
+        example='?',
+        default=None,
+    )
+    city = Field(
+        description='User\'s city',
+        example='Ul`yanovsk',
+        default=None,
+    )
+    avatar = Field(
+        description='URI photo user.',
+        example='https://img.desktopwallpapers.ru/animals/pics/wide/1920x1200/6369fc18cca723f6a53f8730d420e7ee.jpg',
+        default=None,
+    )
+    is_banned = Field(
+        description='Banned ?',
+        example=False,
+        default=None,
+    )
+    user_ban_date = Field(
+        description='If banned, until what time ?',
+        example='2023-09-21 12:00:00',
+        default=None,
+    )
+    created = Field(
+        description='When the user registered ?',
+        example='2022-09-21 12:00:00',
     )
 
 
@@ -62,31 +105,37 @@ class BaseUser(BaseModel):
 class User(BaseUser):
     id: PositiveInt = UserFields.id
     username: str = UserFields.username
-    password: EncryptedSecretBytes = UserFields.password
+    password: str = UserFields.password
     role_name: UserRole = UserFields.role_name
-    is_seller: bool
-    btc_balance: Optional[float] = None
-    btc_address: Optional[str] = None
-    otp: Optional[str] = None
-    city: Optional[str] = None
-    avatar: Optional[str] = None
-    created: datetime
-    is_banned: bool
-    user_ban_date: Optional[datetime] = None
+    is_seller: bool = UserFields.is_seller
+    btc_balance: Optional[float] = UserFields.btc_balance
+    btc_address: Optional[str] = UserFields.btc_address
+    otp: Optional[str] = UserFields.otp
+    city: Optional[str] = UserFields.city
+    avatar: Optional[str] = UserFields.avatar
+    created: datetime = UserFields.created
+    is_banned: Optional[bool] = UserFields.is_banned
+    user_ban_date: Optional[datetime] = UserFields.user_ban_date
 
 
 # Commands.
 class CreateUserCommand(BaseUser):
     username: str = UserFields.username
-    password: EncryptedSecretBytes = UserFields.password
+    password: str = UserFields.password
     role_name: UserRole = UserFields.role_name
 
 
 class UpdateUserCommand(BaseUser):
-    id: PositiveInt = UserFields.id
     username: str = UserFields.username
-    password: EncryptedSecretBytes = UserFields.password
-    role_name: UserRole = UserFields.role_name
+    role_name: Optional[UserRole] = UserFields.role_name
+    is_seller: bool = UserFields.is_seller
+    btc_balance: float = UserFields.btc_balance
+    btc_address: str = UserFields.btc_address
+    otp: str = UserFields.otp
+    city: str = UserFields.city
+    avatar: str = UserFields.avatar
+    is_banned: bool = UserFields.is_banned
+    user_ban_date: str = UserFields.user_ban_date
 
 
 class DeleteUserCommand(BaseUser):
@@ -95,8 +144,8 @@ class DeleteUserCommand(BaseUser):
 
 class ChangeUserPasswordCommand(BaseUser):
     id: PositiveInt = UserFields.id
-    old_password: EncryptedSecretBytes = UserFields.old_password
-    new_password: EncryptedSecretBytes = UserFields.new_password
+    old_password: str = UserFields.old_password
+    new_password: str = UserFields.new_password
 
 
 # Query

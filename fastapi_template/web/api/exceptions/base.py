@@ -3,13 +3,13 @@ from typing import Optional, Union
 from fastapi import HTTPException
 from starlette import status
 
-from fastapi_template.pkg.models.types.strings import NotEmptyStr
+from fastapi_template.pkg.types.strings import NotEmptyStr
 
-__all__ = ["BaseAPIException"]
+__all__ = ['BaseAPIException']
 
 
 class BaseAPIException(HTTPException):
-    message: Optional[Union[NotEmptyStr, str]] = "Base API Exception"
+    message: Optional[Union[NotEmptyStr, str]] = 'Base API Exception'
     status_code: int = status.HTTP_500_INTERNAL_SERVER_ERROR
 
     def __init__(self, message: Optional[NotEmptyStr] = None):

@@ -1,18 +1,18 @@
-from tortoise import Model, fields
+from tortoise import models, fields
 import bcrypt
 
-from fastapi_template import shemas
+from fastapi_template import schemas
 
 __all__ = [
-    'Users',
+    'User',
 ]
 
 
-class Users(Model):
+class User(models.Model):
     id = fields.IntField(pk=True)
     username = fields.CharField(max_length=255, unique=True)
     password = fields.CharField(max_length=255)
-    role_name = fields.CharEnumField(enum_type=shemas.UserRole)
+    role_name = fields.CharEnumField(enum_type=schemas.UserRole)
     is_seller = fields.BooleanField(default=False)
     jwt_key = fields.CharField(max_length=255, null=True)
     btc_balance = fields.FloatField(null=True)

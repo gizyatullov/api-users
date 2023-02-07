@@ -6,11 +6,10 @@ from typing import Any, Dict, List, Tuple, Type, TypeVar
 
 import pydantic
 
-from fastapi_template.pkg.models import types
+__all__ = ['BaseModel',
+           'Model']
 
-__all__ = ["BaseModel", "Model"]
-
-Model = TypeVar("Model", bound="BaseModel")
+Model = TypeVar('Model', bound='BaseModel')
 
 
 class BaseModel(pydantic.BaseModel):
@@ -78,7 +77,6 @@ class BaseModel(pydantic.BaseModel):
         json_encoders = {
             pydantic.SecretStr: lambda v: v.get_secret_value() if v else None,
             pydantic.SecretBytes: lambda v: v.get_secret_value() if v else None,
-            types.EncryptedSecretBytes: lambda v: v.get_secret_value() if v else None,
             bytes: lambda v: v.decode() if v else None,
             datetime: lambda v: int(v.timestamp()) if v else None,
             date: lambda v: int(time.mktime(v.timetuple())) if v else None,

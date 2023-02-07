@@ -2,20 +2,20 @@ from datetime import datetime
 from enum import Enum
 from typing import Optional
 
-from pydantic import Field, PositiveInt, FileUrl
+from pydantic import Field, PositiveInt, AnyHttpUrl
 
-from fastapi_template.pkg.models.base import BaseModel
+from .base import BaseModel
 
 __all__ = [
-    "User",
-    "UserFields",
-    "CreateUserCommand",
-    "ReadUserByIdQuery",
-    "ReadUserByUserNameQuery",
-    "UpdateUserCommand",
-    "DeleteUserCommand",
-    "ChangeUserPasswordCommand",
-    "UserRole",
+    'User',
+    'UserFields',
+    'CreateUserCommand',
+    'ReadUserByIdQuery',
+    'ReadUserByUserNameQuery',
+    'UpdateUserCommand',
+    'DeleteUserCommand',
+    'ChangeUserPasswordCommand',
+    'UserRole',
 ]
 
 
@@ -112,7 +112,7 @@ class User(BaseUser):
     btc_address: Optional[str] = UserFields.btc_address
     otp: Optional[str] = UserFields.otp
     city: Optional[str] = UserFields.city
-    avatar: Optional[str] = UserFields.avatar
+    avatar: Optional[AnyHttpUrl] = UserFields.avatar
     created: datetime = UserFields.created
     is_banned: Optional[bool] = UserFields.is_banned
     user_ban_date: Optional[datetime] = UserFields.user_ban_date
@@ -133,9 +133,9 @@ class UpdateUserCommand(BaseUser):
     btc_address: str = UserFields.btc_address
     otp: str = UserFields.otp
     city: str = UserFields.city
-    avatar: str = UserFields.avatar
+    avatar: AnyHttpUrl = UserFields.avatar
     is_banned: bool = UserFields.is_banned
-    user_ban_date: str = UserFields.user_ban_date
+    user_ban_date: datetime = UserFields.user_ban_date
 
 
 class DeleteUserCommand(BaseUser):

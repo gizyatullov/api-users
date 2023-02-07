@@ -1,18 +1,21 @@
 from pydantic import Field
 
-from fastapi_template.pkg.models.base import BaseModel
-from fastapi_template.pkg.models.types import NotEmptySecretStr
-from fastapi_template.shemas import UserFields
+from fastapi_template.pkg.types import NotEmptySecretStr
+from fastapi_template.schemas import UserFields
 
-__all__ = ["Auth", "AuthCommand", "LogoutCommand"]
+from .base import BaseModel
+
+__all__ = ['Auth',
+           'AuthCommand',
+           'LogoutCommand']
 
 
 class AuthFields:
-    access_token = Field(description="Bearer access token", example="exam.ple.token")
-    refresh_token = Field(description="Bearer refresh token", example="exam.ple.token")
+    access_token = Field(description='Bearer access token', example='exam.ple.token')
+    refresh_token = Field(description='Bearer refresh token', example='exam.ple.token')
     fingerprint = Field(
-        description="Unique fingerprint of user device",
-        example="u-u-i-d",
+        description='Unique fingerprint of user device',
+        example='u-u-i-d',
     )
     role_name = UserFields.role_name
     username = UserFields.username

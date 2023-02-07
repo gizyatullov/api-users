@@ -3,7 +3,7 @@ from datetime import timedelta
 from fastapi import APIRouter, status, Depends
 from fastapi_jwt_auth import AuthJWT
 
-from fastapi_template import shemas
+from fastapi_template import schemas
 from fastapi_template.settings import settings
 from fastapi_template.services import auth_service
 
@@ -24,12 +24,12 @@ def get_config():
 
 @router.post(
     '/login',
-    response_model=shemas.Auth,
+    response_model=schemas.Auth,
     status_code=status.HTTP_200_OK,
     description='Route for authorize.',
 )
 async def auth_user(
-    cmd: shemas.AuthCommand,
+    cmd: schemas.AuthCommand,
     Authorize: AuthJWT = Depends()
 ):
     user = await auth_service.check_user_password(cmd=cmd)
@@ -38,7 +38,7 @@ async def auth_user(
                                                  expires_time=access_token_expires)
     refresh_token = Authorize.create_refresh_token(subject=user.username,
                                                    expires_time=refresh_token_expires)
-    return shemas.Auth(
+    return schemas.Auth(
         access_token=access_token,
         refresh_token=refresh_token
     )
@@ -46,7 +46,7 @@ async def auth_user(
 
 @router.post(
     '/refresh',
-    response_model=shemas.Auth,
+    response_model=schemas.Auth,
     description='Get new tokens pair.',
 )
 async def create_new_token_pair(
@@ -58,7 +58,7 @@ async def create_new_token_pair(
                                                  expires_time=access_token_expires)
     refresh_token = Authorize.create_refresh_token(subject=current_user,
                                                    expires_time=refresh_token_expires)
-    return shemas.Auth(
+    return schemas.Auth(
         access_token=access_token,
         refresh_token=refresh_token
     )

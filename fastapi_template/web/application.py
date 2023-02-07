@@ -8,8 +8,8 @@ from fastapi_jwt_auth.exceptions import AuthJWTException
 
 from fastapi_template.db.config import TORTOISE_CONFIG
 from fastapi_template.logging import configure_logging
-from fastapi_template.pkg.models.base import BaseAPIException
-from fastapi_template.pkg.pkg.middlewares.handle_http_exceptions import (
+from fastapi_template.web.api.exceptions.base import BaseAPIException
+from fastapi_template.web.handle_http_exceptions import (
     handle_api_exceptions,
     authjwt_exception_handler
 )

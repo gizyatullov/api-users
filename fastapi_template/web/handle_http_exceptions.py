@@ -26,7 +26,7 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse
 from fastapi_jwt_auth.exceptions import AuthJWTException
 
-from fastapi_template.pkg.models.base import BaseAPIException
+from fastapi_template.web.api.exceptions.base import BaseAPIException
 
 __all__ = ["handle_internal_exception",
            "handle_api_exceptions",

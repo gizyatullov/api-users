@@ -1,4 +1,4 @@
-from pydantic import Field
+from pydantic import Field, UUID4
 
 from fastapi_template.pkg.types import NotEmptySecretStr
 from fastapi_template.schemas import UserFields
@@ -7,7 +7,10 @@ from .base import BaseModel
 
 __all__ = ['Auth',
            'AuthCommand',
-           'LogoutCommand']
+           'LogoutCommand',
+           'CaptchaQuery',
+           'Captcha',
+           'CaptchaWithoutValue', ]
 
 
 class AuthFields:
@@ -20,6 +23,8 @@ class AuthFields:
     role_name = UserFields.role_name
     username = UserFields.username
     password = UserFields.password
+    uid_captcha = UserFields.uid_captcha
+    value_captcha = UserFields.value_captcha
 
 
 class BaseAuth(BaseModel):
@@ -34,8 +39,30 @@ class Auth(BaseAuth):
 class AuthCommand(BaseAuth):
     username: str = AuthFields.username
     password: str = AuthFields.password
+    uid_captcha: str = AuthFields.uid_captcha
+    value_captcha: str = AuthFields.value_captcha
 
 
 class LogoutCommand(BaseAuth):
     username: str = AuthFields.username
     refresh_token: NotEmptySecretStr = AuthFields.refresh_token
+
+
+class BaseCaptcha(BaseModel):
+    """Base model for captcha."""
+
+
+class Captcha(BaseModel):
+    uid: UUID4
+    image: str
+    value: str
+
+
+class CaptchaWithoutValue(BaseModel):
+    uid: UUID4
+    image: str
+
+
+# Query
+class CaptchaQuery(BaseCaptcha):
+    ...

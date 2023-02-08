@@ -93,6 +93,14 @@ class UserFields:
         description='When the user registered ?',
         example='2022-09-21 12:00:00',
     )
+    uid_captcha = Field(
+        description='Unique ID captcha',
+        example='d22dee4f-44af-4b25-831a-5ba7bc75bca4',
+    )
+    value_captcha = Field(
+        description='Value captcha',
+        example='51iu6v',
+    )
 
 
 class BaseUser(BaseModel):
@@ -123,6 +131,8 @@ class CreateUserCommand(BaseUser):
     username: str = UserFields.username
     password: str = UserFields.password
     role_name: UserRole = UserFields.role_name
+    uid_captcha: str = UserFields.uid_captcha
+    value_captcha: str = UserFields.value_captcha
 
 
 class UpdateUserCommand(BaseUser):

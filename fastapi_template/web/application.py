@@ -36,7 +36,7 @@ def get_app() -> FastAPI:
         title=settings.API_INSTANCE_APP_NAME,
         docs_url=None,
         redoc_url=None,
-        openapi_url="/api/openapi.json",
+        openapi_url='/api/openapi.json',
         default_response_class=UJSONResponse,
     )
 
@@ -45,13 +45,13 @@ def get_app() -> FastAPI:
     register_shutdown_event(app)
 
     # Main router for the API.
-    app.include_router(router=api_router, prefix="/api")
+    app.include_router(router=api_router, prefix='/api')
     # Adds static directory.
     # This directory is used to access swagger files.
     app.mount(
-        "/static",
-        StaticFiles(directory=APP_ROOT / "static"),
-        name="static",
+        '/static',
+        StaticFiles(directory=APP_ROOT / 'static'),
+        name='static',
     )
 
     # Configures tortoise orm.

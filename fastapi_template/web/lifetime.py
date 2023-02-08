@@ -2,6 +2,8 @@ from typing import Awaitable, Callable
 
 from fastapi import FastAPI
 
+from fastapi_template.services.redis.lifetime import init_redis, shutdown_redis
+
 
 def register_startup_event(
     app: FastAPI,
@@ -16,9 +18,9 @@ def register_startup_event(
     :return: function that actually performs actions.
     """
 
-    @app.on_event("startup")
+    @app.on_event('startup')
     async def _startup() -> None:  # noqa: WPS430
-        pass  # noqa: WPS420
+        init_redis(app)
 
     return _startup
 
@@ -33,8 +35,8 @@ def register_shutdown_event(
     :return: function that actually performs actions.
     """
 
-    @app.on_event("shutdown")
+    @app.on_event('shutdown')
     async def _shutdown() -> None:  # noqa: WPS430
-        pass  # noqa: WPS420
+        await shutdown_redis(app)
 
     return _shutdown

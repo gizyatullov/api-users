@@ -2,6 +2,7 @@ import enum
 from functools import lru_cache
 from pathlib import Path
 from tempfile import gettempdir
+from typing import Optional
 
 from dotenv import find_dotenv
 from pydantic import BaseSettings
@@ -71,6 +72,24 @@ class Settings(_Settings):
 
     #: SecretStr: Key for encrypt payload in jwt.
     AUTHJWT_SECRET_KEY: str
+    #: PositiveInt: Access token validity time in minutes
+    ACCESS_TOKEN_EXPIRES: PositiveInt
+    #: PositiveInt: Refresh token validity time in days
+    REFRESH_TOKEN_EXPIRES: PositiveInt
+
+    #: PositiveInt: The storage time of the uid-value captcha in redis in seconds
+    CAPTCHA_TTL: PositiveInt
+    #: PositiveInt: The number of characters issued in the captcha
+    CAPTCHA_NUMBER_CHARACTERS: PositiveInt
+
+    #: str: Redis host
+    REDIS_HOST: str
+    #: PositiveInt: (x > 0) port of redis
+    REDIS_PORT: Optional[PositiveInt] = 6379
+    #: SecretStr: Redis password
+    REDIS_PASSWORD: Optional[SecretStr] = None
+    REDIS_BASE: Optional[PositiveInt] = None
+    REDIS_USER: Optional[str] = None
 
     @property
     def db_url(self) -> URL:
@@ -80,12 +99,31 @@ class Settings(_Settings):
         :return: database URL.
         """
         return URL.build(
-            scheme="postgres",
+            scheme='postgres',
             host=self.POSTGRES_HOST,
             port=self.POSTGRES_PORT,
             user=self.POSTGRES_USER,
             password=self.POSTGRES_PASSWORD.get_secret_value(),
             path=f"/{self.POSTGRES_DATABASE_NAME}",
+        )
+
+    @property
+    def redis_url(self) -> URL:
+        """
+        Assemble REDIS URL from settings.
+
+        :return: redis URL.
+        """
+        path = ''
+        if self.REDIS_BASE is not None:
+            path = f'/{self.REDIS_BASE}'
+        return URL.build(
+            scheme='redis',
+            host=self.REDIS_HOST,
+            port=self.REDIS_PORT,
+            user=self.REDIS_USER,
+            password=self.REDIS_PASSWORD,
+            path=path,
         )
 
 

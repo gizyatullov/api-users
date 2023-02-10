@@ -33,8 +33,6 @@ services:
     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     - POSTGRES_USER=${POSTGRES_USER}
     - POSTGRES_DB=${POSTGRES_DATABASE_NAME}
-    ports:
-    - ${POSTGRES_EXTERNAL_PORT}:5432
     volumes:
     - ${POSTGRES_DATA_VOLUME}:/var/lib/postgresql/data/pgdata
 
@@ -53,6 +51,25 @@ services:
 
     volumes:
       - ${REDIS_DATA_VOLUME}:/data
+
+  adminer:
+    build:
+      context: .
+      dockerfile: docker/adminer/Dockerfile
+
+    restart: always
+
+    env_file:
+      - .env
+    environment:
+      - PMA_HOST=db:5432
+
+    depends_on:
+      - db
+
+    ports:
+      - ${ADMINER_EXTERNAL_PORT}:8080
+
 
 networks:
   default:

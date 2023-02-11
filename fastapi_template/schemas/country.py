@@ -9,7 +9,7 @@ __all__ = [
     'ReadCountryByIdQuery',
 ]
 
-from ..pkg.types.strings import LowerStr
+from fastapi_template.pkg.types.strings import LowerStr
 
 
 class CountryFields:

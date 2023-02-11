@@ -12,8 +12,9 @@ class City(models.Model):
     name = fields.CharField(max_length=255,
                             unique=True,
                             index=True)
-    country_id = fields.ForeignKeyField(model_name=Country.name,
-                                        related_name='cities')
+    country: fields.ForeignKeyRelation[Country] = fields.ForeignKeyField(
+        model_name='models.Country',
+        related_name='cities')
 
     def __str__(self) -> str:
         return self.name

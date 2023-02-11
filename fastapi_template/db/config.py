@@ -5,6 +5,7 @@ from fastapi_template.settings import settings
 MODELS_MODULES: List[str] = [
     'fastapi_template.db.models.user',
     'fastapi_template.db.models.country',
+    'fastapi_template.db.models.city',
 ]  # noqa: WPS407
 
 TORTOISE_CONFIG = {  # noqa: WPS407

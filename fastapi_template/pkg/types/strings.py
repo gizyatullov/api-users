@@ -7,7 +7,8 @@ from pydantic.utils import update_not_none
 from pydantic.validators import constr_length_validator
 
 __all__ = ['NotEmptySecretStr',
-           'NotEmptyStr']
+           'NotEmptyStr',
+           'LowerStr', ]
 
 
 class NotEmptySecretStr(SecretStr):
@@ -41,3 +42,13 @@ class NotEmptyStr(str):
 
     def __repr__(self) -> str:
         return f"NotEmptyStr('{self}')"
+
+
+class LowerStr(str):
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate
+
+    @classmethod
+    def validate(cls, v):
+        return cls(v.lower())

@@ -8,6 +8,10 @@ from fastapi_template.services import user_service, auth_service
 from fastapi_template.web.api.exceptions.auth import IncorrectCaptcha
 from fastapi_template.services.redis.dependency import get_redis_pool
 
+__all__ = [
+    'router',
+]
+
 router = APIRouter()
 
 

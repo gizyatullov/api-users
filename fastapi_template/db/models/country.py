@@ -11,5 +11,8 @@ class Country(models.Model):
                             unique=True,
                             index=True)
 
+    class Meta:
+        table = 'countries'
+
     def __str__(self) -> str:
         return self.name

@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Union
 
 from fastapi_template import schemas
 from fastapi_template.db.dao import CountryDAO
@@ -12,8 +12,10 @@ class CountryService:
     def __init__(self, country_repository: CountryDAO):
         self.repository = country_repository
 
-    async def read_all_countries(self) -> List[schemas.Country]:
-        return await self.repository.read_all()
+    async def read_all_countries(self,
+                                 query: schemas.ReadAllCountryQuery
+                                 ) -> List[schemas.CountryWithCities]:
+        return await self.repository.read_all(query=query)
 
     async def read_specific_country_by_name(
         self,

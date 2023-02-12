@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Union
 
 from fastapi import APIRouter, status
 
@@ -14,12 +14,14 @@ router = APIRouter()
 
 @router.get(
     '/',
-    response_model=List[schemas.Country],
     status_code=status.HTTP_200_OK,
     description='Get all countries.',
 )
-async def read_all_countries():
-    return await country_service.read_all_countries()
+async def read_all_countries(cities: bool = False) -> Union[List[schemas.Country],
+                                                            List[schemas.CountryWithCities]]:
+    return await country_service.read_all_countries(query=schemas.ReadAllCountryQuery(
+        with_cities=cities
+    ))
 
 
 @router.get(

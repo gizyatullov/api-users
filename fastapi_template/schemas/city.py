@@ -6,6 +6,7 @@ from fastapi_template.pkg.types.strings import LowerStr
 __all__ = [
     'CityFields',
     'City',
+    'CityWithoutCountryID',
     'ReadCityByNameQuery',
     'ReadCityByIdQuery',
 ]
@@ -28,6 +29,11 @@ class City(BaseCity):
     id: PositiveInt = CityFields.id
     name: str = CityFields.name
     country_id: PositiveInt = CityFields.country_id
+
+
+class CityWithoutCountryID(BaseCity):
+    id: PositiveInt = CityFields.id
+    name: str = CityFields.name
 
 
 # Query

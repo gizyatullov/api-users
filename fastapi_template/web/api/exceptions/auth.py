@@ -21,4 +21,4 @@ class IncorrectUsernameOrPassword(BaseAPIException):
 
 class IncorrectCaptcha(BaseAPIException):
     status_code = status.HTTP_406_NOT_ACCEPTABLE
-    message = 'Incorrect value captcha.'
+    message = 'Incorrect value captcha or timeout has expired.'

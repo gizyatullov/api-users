@@ -11,8 +11,11 @@ class Country(models.Model):
                             unique=True,
                             index=True)
 
+    cities = fields.ReverseRelation['City']
+
     class Meta:
         table = 'countries'
+        ordering = ['name']
 
     def __str__(self) -> str:
         return self.name

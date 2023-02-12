@@ -1,15 +1,19 @@
+from typing import List, Union
+
 from pydantic import Field, PositiveInt
 
+from fastapi_template.pkg.types.strings import LowerStr
 from .base import BaseModel
+from .city import CityWithoutCountryID
 
 __all__ = [
     'CountryFields',
     'Country',
     'ReadCountryByNameQuery',
     'ReadCountryByIdQuery',
+    'ReadAllCountryQuery',
+    'CountryWithCities',
 ]
-
-from fastapi_template.pkg.types.strings import LowerStr
 
 
 class CountryFields:
@@ -29,7 +33,15 @@ class Country(BaseCountry):
     name: str = CountryFields.name
 
 
+class CountryWithCities(Country):
+    cities: Union[List[CityWithoutCountryID], List] = []
+
+
 # Query
+class ReadAllCountryQuery(BaseCountry):
+    with_cities: bool = False
+
+
 class ReadCountryByNameQuery(BaseCountry):
     name: LowerStr = CountryFields.name
 

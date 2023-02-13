@@ -20,11 +20,11 @@ class CountryService:
     async def read_specific_country_by_name(
         self,
         query: schemas.ReadCountryByNameQuery
-    ) -> schemas.Country:
+    ) -> Union[schemas.CountryWithCities, schemas.Country]:
         return await self.repository.read_by_name(query=query)
 
     async def read_specific_country_by_id(
         self,
         query: schemas.ReadCountryByIdQuery,
-    ) -> schemas.Country:
+    ) -> Union[schemas.CountryWithCities, schemas.Country]:
         return await self.repository.read(query=query)

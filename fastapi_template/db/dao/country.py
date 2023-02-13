@@ -20,14 +20,32 @@ class CountryDAO(BaseDAO):
 
     async def read(self,
                    query: schemas.ReadCountryByIdQuery,
-                   orm_obj: bool = False) -> Union[schemas.Country, Country]:
+                   orm_obj: bool = False) -> Union[schemas.CountryWithCities,
+                                                   schemas.Country, Country]:
+        if query.with_cities:
+            q = Country.filter(id=query.id).prefetch_related()
+            if orm_obj: return await q.first()
+            country_pydantic = pydantic_queryset_creator(Country)
+            q = await country_pydantic.from_queryset(q)
+            q = q.dict()['__root__'][0]
+            return schemas.CountryWithCities.parse_obj(q)
+
         c = await Country.get(id=query.id)
         return c if orm_obj else schemas.Country.from_orm(c)
 
     async def read_by_name(self,
                            query: schemas.ReadCountryByNameQuery,
                            orm_obj: bool = False
-                           ) -> Union[schemas.Country, Country]:
+                           ) -> Union[schemas.CountryWithCities,
+                                      schemas.Country, Country]:
+        if query.with_cities:
+            q = Country.filter(name=query.name).prefetch_related()
+            if orm_obj: return await q.first()
+            country_pydantic = pydantic_queryset_creator(Country)
+            q = await country_pydantic.from_queryset(q)
+            q = q.dict()['__root__'][0]
+            return schemas.CountryWithCities.parse_obj(q)
+
         c = await Country.get(name=query.name)
         return c if orm_obj else schemas.Country.from_orm(c)
 

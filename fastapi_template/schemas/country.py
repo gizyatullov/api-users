@@ -19,6 +19,9 @@ __all__ = [
 class CountryFields:
     id = Field(description='Country id.', example=2)
     name = Field(description='Country name', example='russia')
+    with_cities = Field(description='With a list of cities?',
+                        example=True,
+                        default=False)
 
 
 class BaseCountry(BaseModel):
@@ -44,7 +47,9 @@ class ReadAllCountryQuery(BaseCountry):
 
 class ReadCountryByNameQuery(BaseCountry):
     name: LowerStr = CountryFields.name
+    with_cities: bool = CountryFields.with_cities
 
 
 class ReadCountryByIdQuery(BaseCountry):
     id: PositiveInt = CountryFields.id
+    with_cities: bool = CountryFields.with_cities

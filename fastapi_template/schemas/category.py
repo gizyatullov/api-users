@@ -1,8 +1,7 @@
 from pydantic import Field, PositiveInt
 
 from .base import BaseModel
-from fastapi_template.pkg.types.strings import LowerStr
-from fastapi_template.pkg.types import NotEmptyStr
+from fastapi_template.pkg.types import NotEmptyStr, LowerStr
 
 __all__ = [
     'CategoryFields',
@@ -19,7 +18,7 @@ class CategoryFields:
 
 
 class BaseCategory(BaseModel):
-    """Base model for city."""
+    """Base model for category."""
 
     class Config:
         orm_mode = True

@@ -12,6 +12,7 @@ from .country import CountryService
 from .city import CityService
 from .category import CategoryService
 from .subcategory import SubcategoryService
+from .price import PriceService
 
 __all__ = [
     'user_service',
@@ -20,6 +21,7 @@ __all__ = [
     'city_service',
     'category_service',
     'subcategory_service',
+    'price_service',
 ]
 
 image_captcha = ImageCaptcha()
@@ -39,3 +41,4 @@ category_service = CategoryService(
 subcategory_service = SubcategoryService(
     subcategory_repository=subcategory_repository
 )
+price_service = PriceService()

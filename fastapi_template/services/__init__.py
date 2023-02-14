@@ -3,17 +3,20 @@ from captcha.image import ImageCaptcha
 
 from fastapi_template.db.dao import (user_repository,
                                      country_repository,
-                                     city_repository, )
+                                     city_repository,
+                                     category_repository, )
 from .auth import AuthService
 from .user import UserService
 from .country import CountryService
 from .city import CityService
+from .category import CategoryService
 
 __all__ = [
     'user_service',
     'auth_service',
     'country_service',
     'city_service',
+    'category_service',
 ]
 
 image_captcha = ImageCaptcha()
@@ -26,4 +29,7 @@ country_service = CountryService(
 )
 city_service = CityService(
     city_repository=city_repository
+)
+category_service = CategoryService(
+    category_repository=category_repository
 )

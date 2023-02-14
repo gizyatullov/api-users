@@ -6,7 +6,8 @@ from fastapi_template.web.api import (auth,
                                       monitoring,
                                       users,
                                       countries,
-                                      cities, )
+                                      cities,
+                                      categories, )
 
 api_router = APIRouter()
 api_router.include_router(monitoring.router)
@@ -16,3 +17,4 @@ api_router.include_router(users.router, prefix='/user', tags=['User'])
 api_router.include_router(auth.router, prefix='/auth', tags=['Auth'])
 api_router.include_router(countries.router, prefix='/country', tags=['Country'])
 api_router.include_router(cities.router, prefix='/city', tags=['City'])
+api_router.include_router(categories.router, prefix='/category', tags=['Category'])

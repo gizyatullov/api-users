@@ -6,6 +6,7 @@ MODELS_MODULES: List[str] = [
     'fastapi_template.db.models.user',
     'fastapi_template.db.models.country',
     'fastapi_template.db.models.city',
+    'fastapi_template.db.models.category',
 ]  # noqa: WPS407
 
 TORTOISE_CONFIG = {  # noqa: WPS407

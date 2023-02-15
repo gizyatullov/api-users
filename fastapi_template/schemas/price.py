@@ -9,6 +9,7 @@ __all__ = [
     'BTC',
     'Price',
     'ReadPriceQuery',
+    'UnitPrice',
 ]
 
 
@@ -22,14 +23,21 @@ class BasePrice(BaseModel):
 
 
 class BTC(BasePrice):
-    USDT: Union[PositiveInt, PositiveFloat] = PriceFields.usdt
-    RUB: Union[PositiveInt, PositiveFloat] = PriceFields.rub
+    BTCUSDT: Union[PositiveInt, PositiveFloat] = PriceFields.usdt
+    BTCRUB: Union[PositiveInt, PositiveFloat] = PriceFields.rub
 
 
 class Price(BasePrice):
     BTC: BTC
 
 
+class UnitPrice(BasePrice):
+    name_pair: str
+    price: Union[PositiveInt, PositiveFloat]
+    prefix_in_redis: str = 'price_'
+
+
 # Query
 class ReadPriceQuery(BasePrice):
-    currencies: List[str] = ['usdt', 'rub', ]
+    currencies: List[str] = ['BTCUSDT', 'BTCRUB', ]
+    prefix_in_redis: str = 'price_'

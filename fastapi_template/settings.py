@@ -9,7 +9,7 @@ from pydantic import BaseSettings
 from pydantic.types import PositiveInt, SecretStr
 from yarl import URL
 
-__all__ = ["settings"]
+__all__ = ['settings']
 
 TEMP_DIR = Path(gettempdir())
 
@@ -17,12 +17,12 @@ TEMP_DIR = Path(gettempdir())
 class LogLevel(str, enum.Enum):  # noqa: WPS600
     """Possible log levels."""
 
-    NOTSET = "NOTSET"
-    DEBUG = "DEBUG"
-    INFO = "INFO"
-    WARNING = "WARNING"
-    ERROR = "ERROR"
-    FATAL = "FATAL"
+    NOTSET = 'NOTSET'
+    DEBUG = 'DEBUG'
+    INFO = 'INFO'
+    WARNING = 'WARNING'
+    ERROR = 'ERROR'
+    FATAL = 'FATAL'
 
 
 class _Settings(BaseSettings):
@@ -30,7 +30,7 @@ class _Settings(BaseSettings):
         """Configuration of settings."""
 
         #: str: env file encoding.
-        env_file_encoding = "utf-8"
+        env_file_encoding = 'utf-8'
         #: str: allow custom fields in model.
         arbitrary_types_allowed = True
 
@@ -43,7 +43,7 @@ class Settings(_Settings):
     with environment variables.
     """
 
-    host: str = "127.0.0.1"
+    host: str = '127.0.0.1'
     API_SERVER_PORT: PositiveInt
     # quantity of workers for uvicorn
     workers_count: int = 1
@@ -51,12 +51,14 @@ class Settings(_Settings):
     reload: bool = False
 
     # Current environment
-    environment: str = "dev"
+    environment: str = 'dev'
 
     log_level: LogLevel = LogLevel.INFO
 
     #: str: Name of API service
     API_INSTANCE_APP_NAME: str
+    #: PositiveInt: positive int (x > 0)
+    FREQUENCY_PRICE_UPDATES_IN_MINUTES: PositiveInt = 5
 
     #: str: Postgresql host.
     POSTGRES_HOST: str
@@ -104,7 +106,7 @@ class Settings(_Settings):
             port=self.POSTGRES_PORT,
             user=self.POSTGRES_USER,
             password=self.POSTGRES_PASSWORD.get_secret_value(),
-            path=f"/{self.POSTGRES_DATABASE_NAME}",
+            path=f'/{self.POSTGRES_DATABASE_NAME}',
         )
 
     @property
@@ -128,7 +130,7 @@ class Settings(_Settings):
 
 
 @lru_cache()
-def get_settings(env_file: str = ".env") -> Settings:
+def get_settings(env_file: str = '.env') -> Settings:
     """Create settings instance."""
     return Settings(_env_file=find_dotenv(env_file))
 

@@ -3,6 +3,7 @@ from typing import Awaitable, Callable
 from fastapi import FastAPI
 
 from fastapi_template.services.redis.lifetime import init_redis, shutdown_redis
+from fastapi_template.services.repeat import init_repeaters
 
 
 def register_startup_event(
@@ -12,7 +13,7 @@ def register_startup_event(
     Actions to run on application startup.
 
     This function uses fastAPI app to store data
-    inthe state, such as db_engine.
+    in the state, such as db_engine.
 
     :param app: the fastAPI application.
     :return: function that actually performs actions.
@@ -21,6 +22,7 @@ def register_startup_event(
     @app.on_event('startup')
     async def _startup() -> None:  # noqa: WPS430
         init_redis(app)
+        init_repeaters(app)
 
     return _startup
 

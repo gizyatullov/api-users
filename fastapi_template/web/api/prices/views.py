@@ -18,6 +18,6 @@ __all__ = [
     status_code=status.HTTP_200_OK,
     description='Get currency prices.',
 )
-async def read_price(redis_pool: ConnectionPool = Depends(get_redis_pool), ):
+async def read_price(redis_pool: ConnectionPool = Depends(get_redis_pool)):
     return await price_service.read_price(query=schemas.ReadPriceQuery(),
                                           redis_pool=redis_pool)

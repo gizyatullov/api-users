@@ -1,6 +1,7 @@
 from typing import Dict
 
 from redis.asyncio import ConnectionPool, Redis
+import httpx
 
 from fastapi_template import schemas
 from fastapi_template.web.api.exceptions.price import ServiceIsUnavailable
@@ -9,6 +10,13 @@ __all__ = ['PriceService', ]
 
 
 class PriceService:
+    def _get_price_with_binance(self):
+        ...
+
+    def set_price_in_redis(self,
+                           redis_pool: ConnectionPool) -> None:
+        pass
+
     async def _read_price_in_redis(self,
                                    redis_pool: ConnectionPool,
                                    query: schemas.ReadPriceQuery) -> Dict[str, str]:

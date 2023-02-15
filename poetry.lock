@@ -166,7 +166,7 @@ Pillow = "*"
 name = "certifi"
 version = "2022.12.7"
 description = "Python package for providing Mozilla's CA Bundle."
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -587,7 +587,7 @@ python-versions = ">=3.7"
 name = "httpcore"
 version = "0.16.3"
 description = "A minimal low-level HTTP client."
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 
@@ -616,7 +616,7 @@ test = ["Cython (>=0.29.24,<0.30.0)"]
 name = "httpx"
 version = "0.23.3"
 description = "The next generation HTTP client."
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 
@@ -1059,7 +1059,7 @@ docutils = ">=0.11,<1.0"
 name = "rfc3986"
 version = "1.5.0"
 description = "Validating URI References per RFC 3986"
-category = "dev"
+category = "main"
 optional = false
 python-versions = "*"
 
@@ -1323,7 +1323,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "c6d4a4f7ee8e79fec06d6766eb93f4be2d9323dec79123557ab3ab24d31470d0"
+content-hash = "0a20e44374465acf57e43a8ec7171c469ce64c00c0fe22438cdbfa328aad0b8f"
 
 [metadata.files]
 aiofiles = [

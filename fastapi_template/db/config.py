@@ -3,6 +3,7 @@ from typing import List
 from fastapi_template.settings import settings
 
 MODELS_MODULES: List[str] = [
+    'aerich.models',
     'fastapi_template.db.models.user',
     'fastapi_template.db.models.country',
     'fastapi_template.db.models.city',
